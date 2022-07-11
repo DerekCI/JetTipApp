@@ -2,6 +2,7 @@ package com.example.jettipapp
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -11,6 +12,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Slider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -90,12 +92,16 @@ fun BillForm(modifier: Modifier = Modifier, onValChange: (String) -> Unit = {}){
         totalBillState.value.trim().isNotEmpty()
 
     }
+    val sliderPositionState = remember {
+        mutableStateOf(0f)
+    }
     val split = remember {
         mutableStateOf(1)
     }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    TopHeader()
 
     Surface(modifier = Modifier
         .padding(2.dp)
@@ -141,6 +147,18 @@ fun BillForm(modifier: Modifier = Modifier, onValChange: (String) -> Unit = {}){
                     Text(text = "Text", modifier = Modifier.align(alignment = Alignment.CenterVertically))
                     Spacer(modifier = Modifier.width(200.dp))
                     Text(text = "$33.00")
+                }
+                Column(verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "33%")
+
+                    Spacer(modifier = Modifier.height(14.dp))
+                    //Slider
+                    Slider(value = sliderPositionState.value,
+                        onValueChange = { newVal ->
+                            sliderPositionState.value = newVal
+                        }, modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                    steps = 5)
                 }
             }else{
                 Box(){}
